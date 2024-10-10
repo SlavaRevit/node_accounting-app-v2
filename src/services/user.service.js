@@ -1,13 +1,11 @@
-// const { v4 } = require('uuid');
-let users = [];
-let nextId = 1;
+const { data } = require('../data');
 
 const getAll = () => {
-  return users;
+  return data.users;
 };
 
 const getById = (id) => {
-  return users.find((user) => user.id === id) || null;
+  return data.users.find((user) => user.id === id) || null;
 };
 
 const updateUser = ({ id, name }) => {
@@ -21,25 +19,20 @@ const updateUser = ({ id, name }) => {
 const createUser = (name) => {
   const user = {
     name,
-    id: nextId++,
+    id: data.nextId++,
   };
 
-  users.push(user);
+  data.users.push(user);
 
   return user;
 };
 
 const deleteUser = (id) => {
-  const initialLength = users.length;
+  const initialLength = data.users.length;
 
-  users = users.filter((user) => user.id !== id);
+  data.users = data.users.filter((user) => user.id !== id);
 
-  return users.length < initialLength;
-};
-
-const clearUsers = () => {
-  users = [];
-  nextId = 1;
+  return data.users.length < initialLength;
 };
 
 module.exports = {
@@ -48,5 +41,4 @@ module.exports = {
   updateUser,
   createUser,
   deleteUser,
-  clearUsers,
 };

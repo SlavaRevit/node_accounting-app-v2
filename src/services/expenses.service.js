@@ -1,12 +1,11 @@
-let expenses = [];
-let nextId = 1;
+const { data } = require('../data');
 
 const getAllExpenses = () => {
-  return expenses;
+  return data.expenses;
 };
 
 const getById = (id) => {
-  return expenses.find((exp) => exp.id === parseInt(id));
+  return data.expenses.find((exp) => exp.id === parseInt(id));
 };
 
 const normalizeCategory = (categories) => {
@@ -14,17 +13,17 @@ const normalizeCategory = (categories) => {
 };
 
 const filterExpensesById = (id) => {
-  expenses = expenses.filter((exp) => exp.userId === parseInt(id));
+  data.expenses = data.expenses.filter((exp) => exp.userId === parseInt(id));
 
-  return expenses;
+  return data.expenses;
 };
 
 const filterExpensesByCategory = (category) => {
-  return expenses.filter((exp) => category.includes(exp.category));
+  return data.expenses.filter((exp) => category.includes(exp.category));
 };
 
 const filterExpensesByDate = (from, to) => {
-  return expenses.filter((exp) => {
+  return data.expenses.filter((exp) => {
     const spentAt = new Date(exp.spentAt);
 
     return spentAt >= from && spentAt <= to;
@@ -33,7 +32,7 @@ const filterExpensesByDate = (from, to) => {
 
 const create = ({ userId, spentAt, title, amount, category, note }) => {
   const updatedExpense = {
-    id: nextId++,
+    id: data.nextId++,
     userId,
     spentAt,
     title,
@@ -42,30 +41,24 @@ const create = ({ userId, spentAt, title, amount, category, note }) => {
     note,
   };
 
-  expenses.push(updatedExpense);
+  data.expenses.push(updatedExpense);
 
   return updatedExpense;
 };
 
 const removeExpense = (id) => {
-  expenses = expenses.filter((exp) => exp.id !== +id);
+  data.expenses = data.expenses.filter((exp) => exp.id !== +id);
 
-  return expenses;
+  return data.expenses;
 };
 
 const updateExpense = (exp, req) => {
   return Object.assign(exp, req.body);
 };
 
-const clearExpenses = () => {
-  expenses = [];
-  nextId = 1;
-};
-
 module.exports = {
   getById,
   getAllExpenses,
-  clearExpenses,
   normalizeCategory,
   filterExpensesById,
   filterExpensesByCategory,

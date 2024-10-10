@@ -5,9 +5,14 @@ const cors = require('cors');
 
 const { router: userRouter } = require('./routes/users.route');
 const { router: expensesRoute } = require('./routes/expenses.route');
+const { data } = require('./data');
 
 function createServer() {
   const app = express();
+
+  data.expenses = [];
+  data.users = [];
+  data.nextId = 1;
 
   app.use(cors());
 

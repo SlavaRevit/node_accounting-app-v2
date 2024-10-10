@@ -4,7 +4,7 @@ const get = (req, res) => {
   const users = userService.getAll();
 
   if (!users) {
-    res.send([]);
+    res.send(users);
     res.sendStatus(404);
 
     return;
